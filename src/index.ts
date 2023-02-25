@@ -8,6 +8,8 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>();
 
+app.get('/', (c) => c.redirect('https://akashrajpurohit.com/?ref=easy-gif'));
+
 app.get(
   '/:text',
   cache({
