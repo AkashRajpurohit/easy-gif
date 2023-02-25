@@ -49,8 +49,6 @@ export const getGifByText = async ({
 
   const query = unSlugify(text);
 
-  console.log({ text, query });
-
   const tenorUrl = `https://g.tenor.com/v1/search?key=${apiKey}&q=${query}`;
 
   const response = await fetch(tenorUrl);

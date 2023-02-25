@@ -14,7 +14,7 @@ app.get(
   '/:text',
   cache({
     cacheName: 'easy-gif',
-    cacheControl: 'max-age=1296000, s-maxage=1296000', // cache for 15 days
+    cacheControl: 's-maxage=1296000', // cache for 15 days
   }),
   async (c) => {
     const text = c.req.param('text');
@@ -30,10 +30,13 @@ app.get(
     const imageResponse = await fetch(url);
 
     const { readable, writable } = new TransformStream();
-
+    
     imageResponse.body?.pipeTo(writable);
 
-    return c.newResponse(readable, 200);
+    return c.newResponse(readable, 200, {
+      'Content-Type': 'image/gif',
+      'Cache-Control': 'max-age=1296000'
+    });
   }
 );
 
