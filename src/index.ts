@@ -2,8 +2,8 @@ import { Hono } from 'hono';
 import { getGifByText } from './lib/tenor';
 
 type Bindings = {
-  TENOR_API_KEY: string
-}
+  TENOR_API_KEY: string;
+};
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -16,7 +16,7 @@ app.get('/:text', async (c) => {
   if (error || !url) {
     return c.json({ error }, 400);
   }
-  
+
   // Fetch the GIF from url and stream the response
   const imageResponse = await fetch(url);
 
