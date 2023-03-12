@@ -4,6 +4,9 @@ import { unSlugify } from './utils';
 export const DEFAULT_NOT_FOUND_GIF =
   'https://media.tenor.com/images/7e2970b72db3471877850dc48c123d0b/tenor.gif';
 
+// Less than 6MB
+export const validGifSize = (size) => size < 5900000;
+
 export const getGifUrl = (
   results: ResultsEntity[],
   resultIndex = 0
@@ -23,7 +26,9 @@ export const getGifUrl = (
 
   for (let i = 0; i < keys.length; i++) {
     const gif = media[keys[i]];
-    return gif.url;
+    if (validGifSize(gif.size)) {
+      return gif.url;
+    }
   }
 
   // If no gifs found, return sample gif
