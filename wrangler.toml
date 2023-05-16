@@ -2,6 +2,9 @@ name = "easy-gif"
 main = "src/index.ts"
 compatibility_date = "2023-01-01"
 
+[placement]
+mode = "smart"
+
 [vars]
 # The necessary secrets are:
 # - TENOR_API_KEY
