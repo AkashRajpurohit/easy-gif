@@ -1,8 +1,87 @@
-```
-npm install
-npm run dev
-```
+<br />
+<p align="center">
+  <a href="https://github.com/AkashRajpurohit/easy-gif">
+    <img src="https://media.tenor.com/NjbLQCvQoC8AAAAC/bongo-cat.gif" alt="Bongo cat" width="200" height="150" />
+  </a>
 
-```
-npm run deploy
-```
+  <h3 align="center">Easy GIF!</h3>
+
+  <p align="center">
+    <samp>Effortlessly Find and Share Gifs on the Fly!</samp>
+    <br />
+    <br />
+    <a href="https://github.com/AkashRajpurohit/easy-gif/issues/new?template=bug_report.md">Bug report</a>
+    ·
+    <a href="https://github.com/AkashRajpurohit/easy-gif/issues/new?template=feature_request.md">Feature request</a>
+		<br />
+		<br />
+		<a href="https://workers.cloudflare.com/">
+    	<img alt="Powered by Tenor" src="https://img.shields.io/badge/Deployed%20via-Cloudflare%20Workers-%23FAAD3F" />
+  	</a>
+		<a href="https://tenor.com/">
+    	<img alt="Powered by Tenor" src="https://img.shields.io/badge/Powered%20by-Tenor-0088cc" />
+  	</a>
+		<img alt="Visitors count" src="https://visitor-badge.laobi.icu/badge?page_id=@akashrajpurohit~easy-gif.visitor-badge&style=flat-square&color=0088cc" />
+		<a href="https://twitter.com/akashwhocodes">
+    	<img alt="follow on twitter" src="https://img.shields.io/twitter/follow/akashwhocodes.svg?style=social&label=@akashwhocodes" />
+  	</a>
+		<a href="https://github.com/AkashRajpurohit/easy-gif">
+			<img alt="GitHub" src="https://img.shields.io/github/license/AkashRajpurohit/easy-gif" />
+		</a>
+  </p>
+</p>
+
+## Motivation 💪
+
+Simple utility service which helps me save ~5 seconds for every time I want to send a GIF to communicate with someone.
+
+> These numbers adds up pretty quickly if you are a heavy GIF user as well. 👀
+
+It uses Tenor GIF API to fetch the relevant GIF based on text search and returns the GIF image directly as the API response (not the URL).
+
+You can self host it easily using Cloudflare Workers, see [deployment](#deployment-☁️) section below for more details.
+
+## Endpoint 🚀
+
+- `${HOST_URL}/${my awesome text}` -> pass the text in URL format after slash.
+
+	For example -> `https://example.com/bongo-cat`. Replace `example.com` with whatever your self hosted worker host name is.
+
+## Deployment ☁️
+
+Self hosting this is pretty straight forward, there are two ways.
+
+The simplest way is to use the "Deploy to Workers" button and deploy the current version of service on your Cloudflare account.
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/AkashRajpurohit/easy-gif)
+
+Another way is to [fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo) under your own Github account which will run the `deploy-to-cf` Github action workflow.
+
+This workflow requires some environment variables so make sure add those. These are:
+
+- `CF_API_TOKEN` -> This is your Cloudflare API token which has permissions for Worker scripts.
+
+	Add the API tokens from [here](https://dash.cloudflare.com/profile/api-tokens)
+- `CF_ACCOUNT_ID` -> This would be your Cloudflare Account ID.
+
+Once these are added, run the workflow and you should see the service being deployed on Cloudflare workers.
+
+Take the worker URL and start sending GIFs 🎉
+
+## Technology Stack 💻
+
+- Framework - [Hono](https://honojs.dev/)
+- Deployment - [Cloudflare Workers](https://workers.cloudflare.com/)
+- GIF Service - [Tenor](https://tenor.com/)
+
+## Bugs or Requests 🐛
+
+If you encounter any problems feel free to open an [issue](https://github.com/AkashRajpurohit/easy-gif/issues/new?template=bug_report.md). If you feel the project is missing a feature, please raise a [ticket](https://github.com/AkashRajpurohit/easy-gif/issues/new?template=feature_request.md) on GitHub and I'll look into it. Pull requests are also welcome.
+
+## Where to find me? 👀
+
+[![Website Badge](https://img.shields.io/badge/-akashrajpurohit.com-3b5998?logo=google-chrome&logoColor=white)](https://akashrajpurohit.com/)
+[![Twitter Badge](https://img.shields.io/badge/-@akashwhocodes-00acee?logo=Twitter&logoColor=white)](https://twitter.com/AkashWhoCodes)
+[![Linkedin Badge](https://img.shields.io/badge/-@AkashRajpurohit-0e76a8?logo=Linkedin&logoColor=white)](https://linkedin.com/in/AkashRajpurohit)
+[![Instagram Badge](https://img.shields.io/badge/-@akashwho.codes-e4405f?logo=Instagram&logoColor=white)](https://instagram.com/akashwho.codes/)
+[![Telegram Badge](https://img.shields.io/badge/-@AkashRajpurohit-0088cc?logo=Telegram&logoColor=white)](https://t.me/AkashRajpurohit)
