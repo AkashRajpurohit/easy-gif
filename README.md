@@ -51,7 +51,7 @@ You can self host it easily using Cloudflare Workers, see [deployment](#deployme
 
 Self hosting this is pretty straight forward, there are two ways.
 
-The simplest way is to use the "Deploy to Workers" button and deploy the current version of service on your Cloudflare account.
+The simplest way is to use the "Deploy with Workers" button and deploy the current version of service on your Cloudflare account.
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/AkashRajpurohit/easy-gif)
 
