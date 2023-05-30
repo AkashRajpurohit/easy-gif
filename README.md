@@ -39,6 +39,8 @@ Simple utility service which helps me save ~5 seconds for every time I want to s
 
 It uses Tenor GIF API to fetch the relevant GIF based on text search and returns the GIF image directly as the API response (not the URL).
 
+![Preview](preview.gif)
+
 You can self host it easily using Cloudflare Workers, see [deployment](#deployment-%EF%B8%8F) section below for more details.
 
 ## Endpoint 🚀
