@@ -16,7 +16,7 @@
 		<br />
 		<br />
 		<a href="https://workers.cloudflare.com/">
-    	<img alt="Powered by Tenor" src="https://img.shields.io/badge/Deployed%20via-Cloudflare%20Workers-%23FAAD3F" />
+    	<img alt="Deployed to Cloudflare Workers" src="https://img.shields.io/badge/Deployed%20via-Cloudflare%20Workers-%23FAAD3F" />
   	</a>
 		<a href="https://tenor.com/">
     	<img alt="Powered by Tenor" src="https://img.shields.io/badge/Powered%20by-Tenor-0088cc" />
