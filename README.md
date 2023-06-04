@@ -31,7 +31,7 @@
   </p>
 </p>
 
-## Motivation 💪
+# Motivation 💪
 
 Simple utility service which helps me save ~5 seconds for every time I want to send a GIF to communicate with someone.
 
@@ -43,13 +43,13 @@ It uses Tenor GIF API to fetch the relevant GIF based on text search and returns
 
 You can self host it easily using Cloudflare Workers, see [deployment](#deployment-%EF%B8%8F) section below for more details.
 
-## Endpoint 🚀
+# Endpoint 🚀
 
 - `${HOST_URL}/${my awesome text}` -> pass the text in URL format after slash.
 
 	For example -> `https://example.com/bongo-cat`. Replace `example.com` with whatever your self hosted worker host name is.
 
-## Deployment ☁️
+# Deployment ☁️
 
 Self hosting this is pretty straight forward, there are two ways.
 
@@ -59,28 +59,36 @@ The simplest way is to use the "Deploy with Workers" button and deploy the curre
 
 Another way is to [fork this repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo) under your own Github account which will run the `deploy-to-cf` Github action workflow.
 
-This workflow requires some environment variables so make sure add those. These are:
+This workflow requires some environment variables so make sure add those
+
+## Github Actions
+
+Add these to the forked repository [github actions variables](https://docs.github.com/en/actions/learn-github-actions/variables).
 
 - `CF_API_TOKEN` -> This is your Cloudflare API token which has permissions for Worker scripts.
 
 	Add the API tokens from [here](https://dash.cloudflare.com/profile/api-tokens)
 - `CF_ACCOUNT_ID` -> This would be your Cloudflare Account ID.
 
+## Cloudflare Worker
+
+- `TENOR_API_KEY` - Get your tenor API key from [here](https://tenor.com/gifapi/documentation#quickstart) and save it on the worker environment one it is created.
+
 Once these are added, run the workflow and you should see the service being deployed on Cloudflare workers.
 
 Take the worker URL and start sending GIFs 🎉
 
-## Technology Stack 💻
+# Technology Stack 💻
 
 - Framework - [Hono](https://honojs.dev/)
 - Deployment - [Cloudflare Workers](https://workers.cloudflare.com/)
 - GIF Service - [Tenor](https://tenor.com/)
 
-## Bugs or Requests 🐛
+# Bugs or Requests 🐛
 
 If you encounter any problems feel free to open an [issue](https://github.com/AkashRajpurohit/easy-gif/issues/new?template=bug_report.md). If you feel the project is missing a feature, please raise a [ticket](https://github.com/AkashRajpurohit/easy-gif/issues/new?template=feature_request.md) on GitHub and I'll look into it. Pull requests are also welcome.
 
-## Where to find me? 👀
+# Where to find me? 👀
 
 [![Website Badge](https://img.shields.io/badge/-akashrajpurohit.com-3b5998?logo=google-chrome&logoColor=white)](https://akashrajpurohit.com/)
 [![Twitter Badge](https://img.shields.io/badge/-@akashwhocodes-00acee?logo=Twitter&logoColor=white)](https://twitter.com/AkashWhoCodes)
