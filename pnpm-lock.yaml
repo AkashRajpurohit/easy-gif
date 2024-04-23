@@ -2,12 +2,12 @@ lockfileVersion: 5.4
 
 specifiers:
   '@cloudflare/workers-types': ^4.20221111.1
-  hono: ^3.0.0
+  hono: ^4.0.0
   prettier: ^3.0.0
   wrangler: ^3.0.0
 
 dependencies:
-  hono: 3.0.2
+  hono: 4.2.7
 
 devDependencies:
   '@cloudflare/workers-types': 4.20230221.0
@@ -538,8 +538,8 @@ packages:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
     dev: true
 
-  /hono/3.0.2:
-    resolution: {integrity: sha512-jhb0eCiUTOzbOXZyXQCOk1gf3MKjV4ZXY3PRT6lzma0XPsnnHuDOHYF7RCMHYe7jhl4Y0IAzrmWXneXhOMHypA==}
+  /hono/4.2.7:
+    resolution: {integrity: sha512-k1xHi86tJnRIVvqhFMBDGFKJ8r5O+bEsT4P59ZK59r0F300Xd910/r237inVfuT/VmE86RQQffX4OYNda6dLXw==}
     engines: {node: '>=16.0.0'}
     dev: false
 
