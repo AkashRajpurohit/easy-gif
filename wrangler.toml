@@ -8,3 +8,7 @@ mode = "smart"
 [vars]
 # The necessary secrets are:
 # - TENOR_API_KEY
+
+[observability]
+enabled = true
+head_sampling_rate = 1
