@@ -21,8 +21,8 @@ jobs:
       - name: Setup PNPM ⚙️
         uses: AkashRajpurohit/.github/.github/actions/setup-pnpm@main
         with:
-          node_version: 18
-          pnpm_version: 7
+          node_version: 20
+          pnpm_version: 9
 
       - name: Install dependencies ⏬
         run: pnpm install --no-frozen-lockfile
