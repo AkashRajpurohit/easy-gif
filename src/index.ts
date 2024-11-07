@@ -23,6 +23,13 @@ app.post('/slack/giffy', async (c) => {
     });
   }
 
+  if (!responseUrl) {
+    return c.json({
+      response_type: 'ephemeral',
+      text: "Sorry, slash commando, that didn't work. Please try again.",
+    });
+  }
+
   try {
     const apiKey = c.env.TENOR_API_KEY;
     const { error, url } = await getGifByText({ apiKey, text });
