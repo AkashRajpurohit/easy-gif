@@ -44,7 +44,6 @@ app.post('/slack/giffy', async (c) => {
         response_type: 'in_channel',
         attachments: [
           {
-            title: `Here is your GIF for "${text}"`,
             image_url: url,
           },
         ],
@@ -52,7 +51,7 @@ app.post('/slack/giffy', async (c) => {
     });
 
     // Send acknowledgment to Slack
-    return c.json({ text: 'Generating your GIF...' });
+    return c.text('ok', 200);
   } catch (error) {
     console.error('Error fetching GIF:', error);
     return c.json({
