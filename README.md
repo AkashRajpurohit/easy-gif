@@ -78,6 +78,14 @@ Once these are added, run the workflow and you should see the service being depl
 
 Take the worker URL and start sending GIFs 🎉
 
+# Slack Bot
+
+There is also a slack bot now which you can use to send gifs, you can add it in your slack workspace and start sending gifs using the command `/giffy <query>`.
+
+Add the bot by clicking here
+
+<a href="https://slack.com/oauth/v2/authorize?client_id=1018885169649.7982632532727&scope=chat:write,channels:join,commands&user_scope="><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+
 # Technology Stack 💻
 
 - Framework - [Hono](https://honojs.dev/)
