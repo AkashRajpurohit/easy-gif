@@ -10,6 +10,58 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 app.get('/', (c) => c.redirect('https://akashrajpurohit.com/?ref=easy-gif'));
 
+app.post('/slack/giffy', async (c) => {
+  const params = await c.req.parseBody();
+  const text = params.text as string;
+  const responseUrl = params.response_url as string;
+
+  if (!text) {
+    // Respond with error message if no text is provided
+    return c.json({
+      response_type: 'ephemeral',
+      text: 'Please provide text after `/giffy` command.',
+    });
+  }
+
+  try {
+    const apiKey = c.env.TENOR_API_KEY;
+    const { error, url } = await getGifByText({ apiKey, text });
+
+    if (error || !url) {
+      return c.json({
+        response_type: 'ephemeral',
+        text: `Unable to find GIF for the given text: ${text}`,
+      });
+    }
+
+    // Respond to Slack
+    await fetch(responseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        response_type: 'in_channel',
+        attachments: [
+          {
+            title: `Here is your GIF for "${text}"`,
+            image_url: url,
+          },
+        ],
+      }),
+    });
+
+    // Send acknowledgment to Slack
+    return c.json({ text: 'Generating your GIF...' });
+  } catch (error) {
+    console.error('Error fetching GIF:', error);
+    return c.json({
+      response_type: 'ephemeral',
+      text: 'Sorry, something went wrong. Please try again.',
+    });
+  }
+});
+
 app.get(
   '/:text',
   cache({
@@ -30,12 +82,12 @@ app.get(
     const imageResponse = await fetch(url);
 
     const { readable, writable } = new TransformStream();
-    
+
     imageResponse.body?.pipeTo(writable);
 
     return c.newResponse(readable, 200, {
       'Content-Type': 'image/gif',
-      'Cache-Control': 'max-age=1296000'
+      'Cache-Control': 'max-age=1296000',
     });
   }
 );
