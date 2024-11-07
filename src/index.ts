@@ -65,7 +65,7 @@ app.post('/slack/giffy', async (c) => {
     });
 
     // Send acknowledgment to Slack
-    return c.text('ok', 200);
+    return c.newResponse(null, 200);
   } catch (error) {
     console.error('Error fetching GIF:', error);
     return c.json({
