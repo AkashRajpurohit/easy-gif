@@ -49,9 +49,16 @@ app.post('/slack/giffy', async (c) => {
       },
       body: JSON.stringify({
         response_type: 'in_channel',
-        attachments: [
+        blocks: [
           {
+            type: 'image',
+            title: {
+              type: 'plain_text',
+              text,
+            },
+            block_id: 'image4',
             image_url: url,
+            alt_text: text,
           },
         ],
       }),
