@@ -24,7 +24,7 @@ app.post('/slack/giffy', async (c) => {
     });
   }
 
-  if (!responseUrl) {
+  if (!responseUrl || !responseUrl.startsWith('https://hooks.slack.com')) {
     return c.json({
       response_type: 'ephemeral',
       text: "Sorry, slash commando, that didn't work. Please try again.",
