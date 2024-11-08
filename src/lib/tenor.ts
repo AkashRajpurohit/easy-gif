@@ -1,15 +1,17 @@
+import { SIX_MB } from './constants';
 import { TenorResponse, ResultsEntity, MediaEntity } from './types';
 import { unSlugify } from './utils';
 
 export const DEFAULT_NOT_FOUND_GIF =
   'https://media.tenor.com/images/7e2970b72db3471877850dc48c123d0b/tenor.gif';
 
-// Less than 6MB
-export const validGifSize = (size) => size < 5900000;
+export const validGifSize = (size: number, maxGifSize: number) =>
+  size < maxGifSize;
 
 export const getGifUrl = (
   results: ResultsEntity[],
-  resultIndex = 0
+  resultIndex = 0,
+  maxGifSize: number
 ): string => {
   const result = results[resultIndex];
   if (!result) {
@@ -26,7 +28,7 @@ export const getGifUrl = (
 
   for (let i = 0; i < keys.length; i++) {
     const gif = media[keys[i]];
-    if (validGifSize(gif.size)) {
+    if (validGifSize(gif.size, maxGifSize)) {
       return gif.url;
     }
   }
@@ -38,9 +40,11 @@ export const getGifUrl = (
 export const getGifByText = async ({
   apiKey,
   text = '',
+  maxGifSize = SIX_MB,
 }: {
   apiKey: string;
   text: string;
+  maxGifSize?: number;
 }) => {
   if (!text) {
     // TODO: Handle it better, send a default gif?
@@ -67,6 +71,6 @@ export const getGifByText = async ({
   const { results } = json;
 
   // Pick the first gif (0-indexed) and return the url
-  const gifUrl = getGifUrl(results, 0);
+  const gifUrl = getGifUrl(results, 0, maxGifSize);
   return { url: gifUrl };
 };

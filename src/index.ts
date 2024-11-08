@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { cache } from 'hono/cache';
 import { getGifByText } from './lib/tenor';
+import { TWENTY_MB, SIX_MB } from './lib/constants';
 
 type Bindings = {
   TENOR_API_KEY: string;
@@ -32,7 +33,11 @@ app.post('/slack/giffy', async (c) => {
 
   try {
     const apiKey = c.env.TENOR_API_KEY;
-    const { error, url } = await getGifByText({ apiKey, text });
+    const { error, url } = await getGifByText({
+      apiKey,
+      text,
+      maxGifSize: TWENTY_MB,
+    });
 
     if (error || !url) {
       return c.json({
@@ -85,7 +90,11 @@ app.get(
     const text = c.req.param('text');
     const apiKey = c.env.TENOR_API_KEY;
 
-    const { error, url } = await getGifByText({ apiKey, text });
+    const { error, url } = await getGifByText({
+      apiKey,
+      text,
+      maxGifSize: SIX_MB,
+    });
 
     if (error || !url) {
       return c.json({ error }, 400);
