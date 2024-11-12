@@ -65,6 +65,15 @@ app.post('/slack/giffy', async (c) => {
             image_url: url,
             alt_text: text,
           },
+          {
+            type: 'context',
+            elements: [
+              {
+                type: 'mrkdwn',
+                text: 'Posted using /giffy',
+              },
+            ],
+          },
         ],
       }),
     });
