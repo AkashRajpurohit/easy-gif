@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { cache } from 'hono/cache';
 import { getGifByText } from './lib/tenor';
 import { TWENTY_MB, SIX_MB } from './lib/constants';
+import { SlackInteractivePayload } from './lib/types';
 
 type Bindings = {
   TENOR_API_KEY: string;
@@ -98,41 +99,57 @@ app.post('/slack/giffy', async (c) => {
 });
 
 app.post('/slack/interactive', async (c) => {
-  const payload = await c.req.parseBody();
-  console.log(payload);
-  // @ts-ignore
-  const action = payload.actions && payload.actions[0];
-  const responseUrl = payload.response_url as string;
+  const { payload } = await c.req.parseBody();
+  let slackPayload: SlackInteractivePayload;
+  try {
+    slackPayload = JSON.parse(payload as string);
+  } catch (err) {
+    return c.json({ text: 'Action not recognized' });
+  }
+
+  const action = slackPayload.actions && slackPayload.actions[0];
+  const responseUrl = slackPayload.response_url;
 
   if (action && action.action_id === 'send_gif') {
     const { url, text } = JSON.parse(action.value);
 
-    await fetch(responseUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        response_type: 'in_channel',
-        blocks: [
-          {
-            type: 'image',
-            title: { type: 'plain_text', text },
-            block_id: 'image_final',
-            image_url: url,
-            alt_text: text,
-          },
-          {
-            type: 'context',
-            elements: [{ type: 'mrkdwn', text: 'Posted using /giffy' }],
-          },
-        ],
-      }),
-    });
+    try {
+      await fetch(responseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          response_type: 'in_channel',
+          replace_original: true,
+          delete_original: true,
+          blocks: [
+            {
+              type: 'image',
+              title: { type: 'plain_text', text },
+              block_id: 'image_final',
+              image_url: url,
+              alt_text: text,
+            },
+            {
+              type: 'context',
+              elements: [{ type: 'mrkdwn', text: 'Posted using /giffy' }],
+            },
+          ],
+        }),
+      });
 
-    return c.json({
-      response_type: 'ephemeral',
-      text: 'GIF sent!',
-      replace_original: true,
-    });
+      return c.json({
+        response_type: 'ephemeral',
+        delete_original: true,
+        replace_original: true,
+        text: '',
+      });
+    } catch (error) {
+      console.error('Error posting GIF:', error);
+      return c.json({
+        response_type: 'ephemeral',
+        text: 'Failed to send the GIF. Please try again.',
+      });
+    }
   }
 
   return c.json({ text: 'Action not recognized' });

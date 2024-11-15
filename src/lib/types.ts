@@ -50,3 +50,15 @@ export interface Loopedmp4OrMp4OrNanomp4OrTinymp4 {
   duration: number;
   url: string;
 }
+
+export interface SlackInteractivePayload {
+  type: string;
+  response_url: string;
+  actions: Action[];
+}
+
+export interface Action {
+  action_id: string;
+  value: string;
+  style: string;
+}
