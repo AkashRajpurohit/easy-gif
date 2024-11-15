@@ -80,11 +80,15 @@ Take the worker URL and start sending GIFs 🎉
 
 # Slack Bot
 
-There is also a slack bot now which you can use to send gifs, you can add it in your slack workspace and start sending gifs using the command `/giffy <query>`.
+You can now also create a slack app and expose a slash command to generate and share GIF.
 
-Add the bot by clicking here
+Create a [new app on slack](https://api.slack.com/apps) and use the pre-built manifest file as mentioned [here](./slack.manifest.json). Replace the `<base_url>` with your self hosted version and you are good to go!
 
-<a href="https://slack.com/oauth/v2/authorize?client_id=1018885169649.7982632532727&scope=chat:write,channels:join,commands&user_scope="><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+To use the slash command, you can add it to any channel and use the following syntax:
+
+```
+/giffy <search_term>
+```
 
 # Technology Stack 💻
 

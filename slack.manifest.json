@@ -1,0 +1,43 @@
+{
+	"display_information": {
+		"name": "Giffy",
+		"description": "Generate GIFs (Powered by akashrajpurohit.com)",
+		"background_color": "#0c4a6e",
+		"long_description": "A Simple utility service which helps me save ~5 seconds for every time I want to send a GIF to communicate with someone.\r\n\r\nThe GIF are powered by Tenor and are served from a proxy created at: https://github.com/AkashRajpurohit/easy-gif"
+	},
+	"features": {
+		"bot_user": {
+			"display_name": "Giffy",
+			"always_online": false
+		},
+		"slash_commands": [
+			{
+				"command": "/giffy",
+				"url": "<base_url>/slack/giffy",
+				"description": "Send a GIF",
+				"should_escape": true
+			}
+		]
+	},
+	"oauth_config": {
+		"redirect_urls": [
+			"https://github.com/AkashRajpurohit/easy-gif"
+		],
+		"scopes": {
+			"bot": [
+				"channels:join",
+				"chat:write",
+				"commands"
+			]
+		}
+	},
+	"settings": {
+		"interactivity": {
+			"is_enabled": true,
+			"request_url": "<base_url>/slack/interactive"
+		},
+		"org_deploy_enabled": false,
+		"socket_mode_enabled": false,
+		"token_rotation_enabled": false
+	}
+}
