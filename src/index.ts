@@ -99,6 +99,7 @@ app.post('/slack/giffy', async (c) => {
 
 app.post('/slack/interactive', async (c) => {
   const payload = await c.req.parseBody();
+  console.log(payload);
   // @ts-ignore
   const action = payload.actions && payload.actions[0];
   const responseUrl = payload.response_url as string;
