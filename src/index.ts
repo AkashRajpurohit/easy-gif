@@ -16,7 +16,6 @@ app.post('/slack/giffy', async (c) => {
   const params = await c.req.parseBody();
   const text = params.text as string;
   const responseUrl = params.response_url as string;
-  const userId = params.user_id as string;
 
   if (!text) {
     // Respond with error message if no text is provided
@@ -75,7 +74,13 @@ app.post('/slack/giffy', async (c) => {
                 text: { type: 'plain_text', text: 'Send' },
                 action_id: 'send_gif',
                 style: 'primary',
-                value: JSON.stringify({ url, text, userId }),
+                value: JSON.stringify({ url, text }),
+              },
+              {
+                type: 'button',
+                text: { type: 'plain_text', text: 'Shuffle' },
+                action_id: 'another_gif',
+                value: JSON.stringify({ text }),
               },
             ],
           },
@@ -140,6 +145,82 @@ app.post('/slack/interactive', async (c) => {
       return c.json({
         response_type: 'ephemeral',
         delete_original: true,
+        replace_original: true,
+        text: '',
+      });
+    } catch (error) {
+      console.error('Error posting GIF:', error);
+      return c.json({
+        response_type: 'ephemeral',
+        text: 'Failed to send the GIF. Please try again.',
+      });
+    }
+  } else if (action && action.action_id === 'another_gif') {
+    const { text } = JSON.parse(action.value);
+
+    try {
+      const apiKey = c.env.TENOR_API_KEY;
+      const { error, url } = await getGifByText({
+        apiKey,
+        text,
+        maxGifSize: TWENTY_MB,
+        getRandomGif: true,
+      });
+
+      if (error || !url) {
+        return c.json({
+          response_type: 'ephemeral',
+          text: `Unable to find GIF for the given text: ${text}`,
+        });
+      }
+
+      await fetch(responseUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          response_type: 'ephemeral',
+          replace_original: true,
+          blocks: [
+            {
+              type: 'image',
+              title: {
+                type: 'plain_text',
+                text,
+              },
+              block_id: 'preview_image',
+              image_url: url,
+              alt_text: text,
+            },
+            {
+              type: 'actions',
+              elements: [
+                {
+                  type: 'button',
+                  text: { type: 'plain_text', text: 'Send' },
+                  action_id: 'send_gif',
+                  style: 'primary',
+                  value: JSON.stringify({ url, text }),
+                },
+                {
+                  type: 'button',
+                  text: { type: 'plain_text', text: 'Shuffle' },
+                  action_id: 'another_gif',
+                  value: JSON.stringify({ text }),
+                },
+              ],
+            },
+            {
+              type: 'context',
+              elements: [{ type: 'mrkdwn', text: 'Preview of your GIF' }],
+            },
+          ],
+        }),
+      });
+
+      return c.json({
+        response_type: 'ephemeral',
         replace_original: true,
         text: '',
       });

@@ -10,7 +10,7 @@ export const validGifSize = (size: number, maxGifSize: number) =>
 
 export const getGifUrl = (
   results: ResultsEntity[],
-  resultIndex = 0,
+  resultIndex: number,
   maxGifSize: number
 ): string => {
   const result = results[resultIndex];
@@ -41,10 +41,12 @@ export const getGifByText = async ({
   apiKey,
   text = '',
   maxGifSize = SIX_MB,
+  getRandomGif = false,
 }: {
   apiKey: string;
   text: string;
   maxGifSize?: number;
+  getRandomGif?: boolean;
 }) => {
   if (!text) {
     // TODO: Handle it better, send a default gif?
@@ -70,7 +72,12 @@ export const getGifByText = async ({
 
   const { results } = json;
 
-  // Pick the first gif (0-indexed) and return the url
-  const gifUrl = getGifUrl(results, 0, maxGifSize);
+  let gifIndex = 0;
+
+  if (getRandomGif) {
+    gifIndex = Math.floor(Math.random() * results.length);
+  }
+
+  const gifUrl = getGifUrl(results, gifIndex, maxGifSize);
   return { url: gifUrl };
 };
