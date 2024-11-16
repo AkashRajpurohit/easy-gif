@@ -82,6 +82,12 @@ app.post('/slack/giffy', async (c) => {
                 action_id: 'another_gif',
                 value: JSON.stringify({ text }),
               },
+              {
+                type: 'button',
+                text: { type: 'plain_text', text: 'Cancel' },
+                action_id: 'cancel',
+                value: JSON.stringify({}),
+              },
             ],
           },
           {
@@ -209,6 +215,12 @@ app.post('/slack/interactive', async (c) => {
                   action_id: 'another_gif',
                   value: JSON.stringify({ text }),
                 },
+                {
+                  type: 'button',
+                  text: { type: 'plain_text', text: 'Cancel' },
+                  action_id: 'cancel',
+                  value: JSON.stringify({}),
+                },
               ],
             },
             {
@@ -229,6 +241,30 @@ app.post('/slack/interactive', async (c) => {
       return c.json({
         response_type: 'ephemeral',
         text: 'Failed to send the GIF. Please try again.',
+      });
+    }
+  } else if (action && action.action_id === 'cancel') {
+    try {
+      await fetch(responseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          response_type: 'in_channel',
+          delete_original: true,
+        }),
+      });
+
+      return c.json({
+        response_type: 'ephemeral',
+        delete_original: true,
+        replace_original: true,
+        text: '',
+      });
+    } catch (error) {
+      console.error('Error posting GIF:', error);
+      return c.json({
+        response_type: 'ephemeral',
+        text: 'Please try again, or directly delete the message for now',
       });
     }
   }
