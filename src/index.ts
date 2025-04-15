@@ -142,7 +142,12 @@ app.post('/slack/interactive', async (c) => {
             },
             {
               type: 'context',
-              elements: [{ type: 'mrkdwn', text: 'Posted using /giffy' }],
+              elements: [
+                {
+                  type: 'mrkdwn',
+                  text: `Posted using /giffy by @${slackPayload.user.username}`,
+                },
+              ],
             },
           ],
         }),
