@@ -2,5 +2,23 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
+  ],
+  "autoApprove": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "recreateClosed": true,
+    "rebaseStalePrs": true
+  },
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "enabled": true
+    }
   ]
 }
